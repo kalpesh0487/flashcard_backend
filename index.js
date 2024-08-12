@@ -9,7 +9,7 @@ const app = express();
 const corsOptions = {
     origin: (origin, callback) => {
         // Check if the request origin is allowed
-        const allowedOrigins = [process.env.FRONTEND_URL, "https://flashcard-backend-radl.onrender.com"];
+        const allowedOrigins = ["https://flash-card-lemon-omega.vercel.app", "https://flashcard-backend-radl.onrender.com"];
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
