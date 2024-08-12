@@ -4,11 +4,22 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+
+// Configure CORS to allow specific origins
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Check if the request origin is allowed
+        const allowedOrigins = [process.env.FRONTEND_URL];
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type'],
-}));
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Create a MySQL connection pool
